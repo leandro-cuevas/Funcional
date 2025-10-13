@@ -1,0 +1,607 @@
+para todo xs. para todo ys. length (xs ++ ys) = length xs + length ys
+
+1) Decido hacer recursión estructural sobre la lista xs
+
+Caso base ¿length ([] ++ ys) = length [] + length ys?
+
+Caso inductivo ¿length ((x:xs') ++ ys) = length (x:xs')+ length ys?
+
+HI: length (xs' ++ ys) = length xs' + length ys
+
+Dem)
+
+Caso base. length ([] ++ ys) = length [] + length ys
+
+Lado izquierdo. 			Lado derecho
+
+length ([] ++ ys)			length [] + length ys
+		(caso base)					(caso base)
+length (0 ++ ys)			0 + length ys
+		(artimética)					(aritmética)
+length ys				length ys
+
+Caso inductivo. length ((x:xs') ++ ys) = length (x:xs')+ length ys
+
+Lado izquierdo.				Lado derecho
+
+length ((x:xs') ++ ys)			length (x:xs')+ length ys
+		(caso inductivo)			(caso inductivo)
+1 + length (xs++ys)			1 + length xs'+ length ys
+		(H.I)
+
+1 + length xs' + length ys
+
+Demostrado
+
+....................................................................................................................
+
+ count (const True) = length
+
+Para todo xs ¿count (const True) xs = length xs?
+
+Sea xs una lista bien formada.
+
+1) Decido hacer recursión estructural sobre la lista xs
+
+Caso base ¿count (const True) [] = length []?
+
+Caso recursivo ¿count (const True) (x:xs') = length (x:xs')?
+
+HI: count (const True) xs' = length xs'
+
+Dem)
+
+Caso base. count (const True) [] = length []
+
+Lado izquierdo			Lado derecho
+
+count (const True) []		length []
+		(caso base)			(caso base)
+0				0
+
+Caso recursivo. count (const True) (x:xs') = length (x:xs')
+
+Lado izquierdo						Lado derecho
+
+count (const True) (x:xs')				length (x:xs')
+		(caso recursivo)						(caso recursivo)
+uniSiCeroSino (const True x) + count (const True) xs'	1 + length xs'
+		(const)
+uniSiCeroSino True + count (const True) xs'
+		(unoSiCeroSino caso 1)
+1 + count (const True) xs'
+		(H.I.)
+1 + length xs'
+
+Demostrado.
+
+....................................................................................................................
+
+elem = any . (==)
+
+Para todo x. Para todo xs. ¿elem x xs = any . (==) x xs?
+
+Decido hacer recursión estructural sobre la estructura xs
+
+Caso base. ¿elem x [] = any . (==) x []?
+
+Caso inductivo. ¿elem x (x':xs') = any . (==) x (x':xs')?
+
+H.I. elem x xs' = any . (==) x xs'. O lo que es lo mismo elem x xs' = any ((==) x) xs'
+
+Dem)
+
+Caso base. elem x [] = any . (==) x []. 
+
+Lado izquierdo				Lado derecho
+
+ elem x []				any . (==) x []
+		(caso base)				(compose)
+False					any ((==) x) []
+							(any. Caso base)
+					False
+
+Caso recursivo. elem x (x':xs') = any . (==) x (x':xs')
+
+Lado izquierdo				Lado derecho
+
+elem x (x':xs')				any . (==) x (x':xs')
+		(elem. Caso recursivo)			(compose)
+x == x' || elem x xs'			any ((==) x) (x':xs')
+							(any. Caso recursivo)
+					x == x' || any ((==) x) xs'
+							(H.I)
+					x == x' || elem x xs'
+
+Demostrado
+
+....................................................................................................................
+
+para todo x. any (elem x) = elem x . concat
+para todo xss. any (elem x) xss = elem x . concat xss
+
+Decido hacer recursión estructural sobre la estructura xss
+
+Caso base ¿any (elem x) [] = elem x . concat []?
+
+Caso recursivo. any (elem x) xs:xss' = elem x . concat xs:xss'
+
+H.I. any (elem x) xss' = elem x . concat xss'
+
+Dem)
+
+Caso base any (elem x) [] = elem x . concat []
+
+Lado izquierdo				Lado derecho
+
+any (elem x) []				elem x . concat []
+		(any. Caso base)			(compose)
+False					elem x (concat [])
+							(concat caso base)
+					elem x []
+							(elem caso base)
+					False
+
+Case recursivo. any (elem x) xs:xss' = elem x . concat xs:xss'
+
+Lado izquierdo				Lado derecho
+
+any (elem x) xs:xss'			elem x . concat xs:xss'
+		(any. Caso recursivo)			(compose)
+elem x xs || any (elem x) xss'		elem x (concat xs:xss')
+							(concat. Caso recursivo)
+					elem x (xs ++ concat xss')
+							(Lema)
+					elem x xs || elem x (concat xss')
+							(H.I.)
+					elem x xs || any (elem x) xss'
+
+Demostración del lema
+
+elem x (xs ++ ys) = elem x xs || elem x ys
+
+Elijo hacer recursión sobre la estructura xs
+
+Caso base. ¿elem x ([] ++ ys) = elem x [] || elem x ys?
+
+Caso recursivo ¿elem x ((x':xs') ++ ys) = elem x (x':xs') || elem x ys?
+
+H.I. elem x (xs' ++ ys) = elem x xs' || elem x ys
+
+Dem)
+
+Caso base. elem x ([] ++ ys) = elem x [] || elem x ys
+
+Lado izquierdo 				Lado derecho
+
+elem x ([] ++ ys)			elem x [] || elem x ys
+		(propieda de ++)			(primer elem, caso 1)
+
+elem x ys				False || elem x ys
+							(propiedad de booleanos)
+					elem x ys
+
+Demostrado.
+
+Caso recursivo. elem x ((x':xs') ++ ys) = elem x (x':xs') || elem x ys
+
+Lado izquierdo				Lado derecho
+
+elem x (x':xs' ++ ys)			elem x (x':xs') || elem x ys
+		(Definición de ++)			(elem. Caso recursivo)
+elem x (x' : (xs' ++ ys))  		x == x' || elem x xs' || elem x ys
+		(elem. Caso recursivo)
+x == x' || elem x (xs'++ys)
+		(H.I.)
+x == x' || elem x xs' || elem x ys
+
+Demostrado.
+
+....................................................................................................................
+
+para todo xs. para todo ys. subset xs ys = all (flip elem ys) xs
+
+Elijo realizar recursión estructural sobre la estructura de listas xs.
+
+Caso base. ¿subset [] ys = all (flip elem ys) []?
+
+Caso recursivo. ¿subset (x:xs') ys = all (flip elem ys) (x:xs')?
+
+HI. subset xs' ys = all (flip elem ys) xs'
+
+Dem)
+
+Caso base. subset [] ys = all (flip elem ys) []
+
+Lado  izquierdo				Lado derecho
+
+subset [] ys				all (flip elem ys) []
+		(subset. Caso 1)			(all. Caso 1)
+True					True
+
+Demostrado.
+
+Caso recursivo
+
+subset (x:xs') ys = all (flip elem ys) (x:xs')
+
+Lado izquierdo				Lado derecho
+
+subset (x:xs') ys			all (flip elem ys) (x:xs')
+		(subset. Caso 2)			(all. Caso 2)
+elem x ys && subset xs' ys		flip elem ys x && all (flip elem ys) xs'
+		(H.I)					(def de flip)
+elem x ys && all (flip elem ys) xs'	elem x ys && all (flip elem ys) xs'
+
+Demostrado.
+
+....................................................................................................................
+
+all null = null . concat
+Para todo xss. all null xss = null . concat xss
+Sea xss una lista de listas bien formada.
+Decido hacer recursión estructural sobre la estructura xss
+
+Caso base. all null [] = null . concat []
+
+Caso recursivo. all null (xs:xss')= null . concat (xs:xss')
+
+H.I. all null xss' = null . concat xss'
+
+Dem)
+
+Caso base. all null [] = null . concat []
+
+Lado izquierdo				Lado derecho
+
+all null []				null. concat []
+		(all. Caso 1)				(def de .)
+True					null (concat [])
+							(def de concat. Caso 1)
+					null []
+							(null. Caso 1)
+					True
+
+Caso recursivo. all null (xs:xss')= null . concat (xs:xss')
+
+Lado derecho				Lado izquierdo
+
+all null (xs:xss')			null . concat (xs:xss')
+		(all. Caso 2)				(def de .)
+null xs && all null xss'		null (concat (xs:xss'))
+		(H.I.)					(concat. Caso 2)
+null xs && null (concat xss')		null (xs ++ concat xss')
+							(lema)
+					null xs && null (concat xss')
+
+Demostrado.
+
+Demostración del lema. null (xs ++ concat xss') = null xs && null (concat xss')
+
+Elijo realizar recursión estructural sobre la lista xs.
+Sea xs una lista bien formada.
+
+Caso base. null ([] ++ concat xss') = null [] && null (concat xss')
+
+Caso recursivo null ((x:xs')++ concat xss') = null (x:xs') && null (concat xss')
+
+H.I. null (xs' ++ concat xss') = null xs' && null (concat xss')
+
+Dem)
+
+Caso base. null ([] ++ concat xss') = null [] && null (concat xss')
+
+Lado izquierdo				Lado derecho
+
+null ([] ++ concat xss')		null [] && null (concat xss')
+		(def de ++)				(null. Caso 1)
+null (concat xss')			True && null (concat xss')
+							(def de &&)
+					null (concat xss')
+
+Demostrado.
+
+Caso recursivo. null ((x:xs')++ concat xss') = null (x:xs') && null (concat xss')
+
+Lado izquierdo 				Lado derecho
+
+null ((x:xs') ++ concat xss')		null (x:xs') && null (concat xss')
+		(def de ++)				(def de null)
+null (x:(xs' ++ concat xss'))		False && null (concat xss')
+							(def de &&)
+False					False
+
+Demostrado.
+
+....................................................................................................................		
+	
+g) length = length . reverse
+Para todo xs. length xs = length . reverse xs
+Sea xs una lista bien formada.
+
+Elijo realizar recursión estrucutral sobre la lista xs
+
+Caso base. length [] = length . reverse []
+
+Caso inductivo. length (x:xs') = length . reverse (x:xs')
+
+H.I. length xs' = length . reverse (xs')
+
+Dem)
+
+Caso base.
+
+length [] = length . reverse []
+
+Lado izquierdo				Lado derecho
+
+length [] 				length . reverse []
+		(length. Caso 1)			(reverse. Caso 1)
+0					length []
+							(lema o caso 1)
+					0
+
+Demostrado.
+
+Caso recursivo
+
+length (x:xs') = length . reverse (x:xs')
+
+Lado izquierdo				Lado derecho
+
+length (x:xs')				length . reverse (x:xs')
+		(length. Caso 2)			(def de .)
+1 + length xs'				length (reverse (x:xs'))
+		(H.I)					(reverse. Caso 2)
+1 + length . reverse (xs')		length (reverse xs' ++ [x])
+							(lema)
+					1 + length . reverse (xs')
+
+Demostrado.
+
+Demostración del lema length (reverse xs' ++ [x]) = 1 + length (reverse (xs'))
+
+Decido realizar recursión estructural sobre la lista xs
+
+Sea xs' una lista bien formada.
+
+Caso base length (reverse [] ++ [x]) = 1 + length . reverse []
+
+Caso inductivo. length (reverse (x':xs) ++ x) = 1 + length . reverse (x':xs)
+
+H.I length (reverse xs ++ [x]) = 1 + length (reverse xs)
+
+Dem)
+
+Caso base. length (reverse [] ++ x) = 1 + length . reverse []
+
+Lado derecho				Lado izquierdo
+
+length (reverse [] ++ [x])		1 + length . reverse []
+		(reverse. Caso 1)			(reverse. Caso 1)
+length [] ++ [x]				1 + length []
+		(def de ++)				(lema o caso 1)
+length [x]				1 + 0
+		(length. Caso 2)			(aritmética)
+1 + length []				1
+		(length caso 1)
+1+0
+		(aritmética)
+1
+
+Demostrado.
+
+Caso recursivo. length (reverse (x':xs) ++ [x]) = 1 + length . reverse (x':xs)
+
+Lado izquierdo				Lado derecho
+
+length (reverse (x':xs) ++ [x])		1 + length (reverse (x':xs))
+		(reverse caso 2)			(reverse. Caso 2)
+length ((reverse xs ++ [x']) ++ [x])	1 + length (reverse xs ++ [x'])
+		(Asociatividad de ++)			(lema)		
+length (reverse xs ++ [x', x])		1 + (length (reverse xs) + length [x'])
+		(lema)					(length. Caso 2)
+length (reverse xs) + length [x', x]    1 + length (reverse xs) + 1
+		(length. Caso 2x2)			(asociatividad y aritmetica(
+length (reverse xs) + 2			length (reverse xs) + 2
+
+Demostrado.
+
+Demostración del lema length(a++b)=length a +length b
+Decido hacer recursión sobre a.
+Sea a una lista bien formada
+
+Caso base. length([]++b)=length [] +length b
+
+Caso recursivo length((x:xs)++b) = length (x:xs) + length b
+H.I. length(xs++b) = length xs + length b
+
+Dem)
+
+Caso base. length([]++b)= length [] +length b
+
+Lado izquierdo				Lado derecho
+
+length([]++b)				length [] +length b
+		(def ++)				(length caso 1)
+length b				0 + length b
+							(aritmética)
+					length b
+
+Demostrado.
+
+Caso recursivo. length((x:xs)++b) = length (x:xs) + length b
+
+Lado izquierdo				Lado derecho
+
+length((x:xs)++b)			length (x:xs) + length b
+		(length. Caso 2)			(length. Cas 2)
+1 + length xs++b			1 + length xs + length b
+		(H.I.)
+1 + length xs + length b
+
+....................................................................................................................
+
+para todo xs. para todo ys.
+reverse (xs ++ ys) = reverse ys ++ reverse xs
+
+Decido realizar recursión estructural sobre la lista xs.
+
+Sea xs e ys listas bien formadas.
+
+Caso base ¿reverse ([] ++ ys) = reverse ys ++ reverse []?
+
+Caso recursivo. ¿reverse ((x:xs')++ ys) = reverse ys ++ reverse (x:xs')?
+
+H.I. reverse (xs'++ ys) = reverse ys ++ reverse xs'
+
+Dem)
+
+Caso base. reverse ([] ++ ys) = reverse ys ++ reverse []
+
+Lado izquierdo				Lado derecho
+
+reverse ([] ++ ys)			reverse ys ++ reverse []
+		(def de ++)			(reverse. Caso 1)
+reverse ys				reverse ys ++ []
+						(def de++)
+					reverse ys
+
+Demostrado.
+
+Caso recursivo.
+
+reverse ((x:xs')++ ys) = reverse ys ++ reverse (x:xs')
+
+Lado izquierdo				Lado derecho
+
+reverse ((x:xs')++ ys)			reverse ys ++ reverse (x:xs')
+		(def de ++)			(def de reverse caso 2)
+reverse (x:(xs'++ys))			reverse ys ++ (reverse xs ++ [x])
+		(reverse)
+reverse (xs'++ys) ++ [x]
+		(H.I)
+reverse ys + reverse xs' ++ [x]
+		(def de ++)
+reverse ys + (reverse xs'++[x])
+
+Demostrado.
+
+....................................................................................................................
+
+all p (xs++ys) = all p (reverse xs) && all p (reverse ys)
+
+Decido realizar recursión estructural sobre la lista xs
+Sea  xs una lista bien formada.
+
+Caso base. all p ([]++ys) = all p (reverse []) && all p (reverse ys)		
+
+Caso recursivo. all p ((x:xs')++ys) = all p (reverse (x:xs')) && all p (reverse ys)
+
+H.I. all p (xs'++ys) = all p (reverse xs') && all p (reverse ys)
+
+Dem)
+
+Caso base. all p ([]++ys) = all p (reverse []) && all p (reverse ys)
+
+Lado izquierdo				Lado derecho
+
+all p ([]++ys)				all p (reverse []) && all p (reverse ys)
+		(def de ++)				(reverse. Caso 1)
+all p ys				all p [] && all p (reverse ys)
+							(all. Caso 1)
+					True && all p (reverse ys)
+							(propiedad de &&)
+					all p (reverse ys)
+							(lema)
+					all p ys
+
+Demostración del lema all p (reverse ys) = all p ys
+Decido hacer recursion estructural sobre ys. Sea ys una lista bien formada
+
+Caso base. all p (reverse []) = all p []
+
+Caso recursivo. all p (reverse (y:ys') = all p (y:ys')
+
+H.I. all p (reverse ys') = all p ys'
+
+Dem)
+
+Caso base. all p (reverse []) = all p []
+
+Lado izquierdo				Lado derecho
+
+all p (reverse []) 			all p []
+		(reverse. Caso 1)		(lema)
+all p []				True
+		(all. Caso 1)
+True
+
+Caso recursivo. all p (reverse (y:ys') = all p (y:ys')
+
+Lado izquierdo					Lado derecho
+
+all p (reverse (y:ys')				all p (y:ys')
+		(reverse. Caso 2)			(all. Caso 2)
+all p (reverse ys' ++ [y])			p y && all p ys'
+		(H.I. Del primer caso)
+all p (reverse ys') && all p (reverse [y])
+		(reverse. Caso 2)
+all p (reverse ys') && all p [y]
+		(H.I. 2)
+all p ys' && all p [y]
+		(all. Caso 2)
+all p ys' && p y
+		(conmutatividad de &&)
+p y && all p ys'
+
+Demostrado
+
+Caso recursivo
+
+all p ((x:xs')++ys) = all p (reverse (x:xs')) && all p (reverse ys)
+
+Lado izquierdo					Lado derecho
+
+all p ((x:xs')++ys)				all p (reverse (x:xs')) && all p (reverse ys)
+			(all. Caso 2)					(H.I.2)
+p x && all p (xs'++ys)				all p (reverse (x:xs')) & all p ys
+			(H.I.1)						(reverse. caso 2)
+p x && all p xs' && all p ys			all p (reverse xs' ++ [x]) & all p ys
+									(H.I.1)
+						p x && all p xs' && all p ys
+
+Demostrado
+
+....................................................................................................................
+
+para todo xs. para todo ys. unzip (zip xs ys) = (xs, ys)
+
+Decido hacer recursion estructural sobre la lista xs.
+Sea xs una lista bien formada.
+
+Caso base
+
+unzip (zip [] ys) = ([], ys)
+
+Caso recursivo
+
+unzip (zip (x:xs') ys) = ((x:xs'), ys)
+
+H.I. unzip (zip xs' ys) = (xs', ys)
+
+Dem)
+
+Caso base. unzip (zip [] ys) = ([], ys)
+
+Lado izquierdo				Lado derecho
+
+unzip (zip [] ys)			([], ys)
+		(zip. Caso 1)
+unzip []
+		(unzip. Caso 1)
+([], [])
+
+
+No vale
+

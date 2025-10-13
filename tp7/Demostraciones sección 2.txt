@@ -1,0 +1,237 @@
+largoDePlanilla (juntarPlanillas Fin p) = largoDePlanilla Fin + largoDePlanilla p
+
+Lado izquierdo						Lado derecho
+
+largoDePlanilla (juntarPlanillas Fin p)			largoDePlanilla Fin + largoDePlanilla p
+	
+			(juntarPlanillas. Caso 1)					(largoPlanilla. Caso 1)
+
+largoDePlanilla p					0 + largoDePlanilla p			
+
+											(aritmética)
+
+							largoPlanilla P
+
+....................................................................................................................
+
+largoDePlanilla(juntarPlanillas (Registro "Edsger" Fin) p)= largoDePlanilla (Registro "Edsger" Fin)+ largoDePlanilla p
+
+Lado izquierdo								Lado derecho
+
+largoDePlanilla(juntarPlanillas (Registro "Edsger" Fin) p)		largoDePlanilla (Registro "Edsger" Fin)+ largoDePlanilla p
+
+					(juntarPlanillas. Caso 2)						(largoDePlanilla. Caso 2)
+
+largoDePlanilla (Registro "Edgser" (juntarPlanillas Fin p))		(1 + largoDePlanilla Fin) + largoDePlanilla p
+
+					(juntarPlanillas. Caso 1)						(largoDePlanilla. Caso 1)
+
+largoDePlanilla (Registro "Edgser" p)					1 + 0 + largoDePlanilla p
+
+					(largoDePlanilla. Caso 2)						(aritmética)
+
+1 + largoDePlanilla p							1 + largoDePlanilla p
+
+....................................................................................................................
+
+
+largoDePlanilla (juntarPlanillas (Registro "Alan" (Registro "Edsger" Fin)) p) = largoDePlanilla (Registro "Alan"(Registro "Edsger" Fin))+ largoDePlanilla p
+
+Lado izquierdo									Lado derecho
+
+largoDePlanilla (juntarPlanillas (Registro "Alan" (Registro "Edsger" Fin)) p)	largoDePlanilla (Registro "Alan"(Registro "Edsger" Fin))+ largoDePlanilla p
+
+					(juntarPlanillas. Caso 2)								(largoDePlanilla. Caso 2)
+
+largoDePlanilla (Registro "Alan" (juntarPlanillas (Registro "Edsger" Fin) p))	1 + largoDePlanilla (Registro "Edsger" Fin) + largoDePlanilla p
+
+					(juntarPlanillas. Caso 2)								(largoDePlanilla. Caso 2)
+
+largoDePlanilla (Registro "Alan" (Registro "Edsger" (juntarPlanillas  Fin p)))	1 + 1 + largoDePlanilla Fin + largoDePlanilla p
+
+					(juntarPlanillas. Caso 1)								(largoDePlanilla.  Caso 1)
+
+largoDePlanilla (Registro "Alan" (Registro "Edsger" p))				1 + 1 + 0 + largoDePlanilla p
+
+					(largoDePlanilla. Caso 2)								(aritmética)
+
+1 + largoDePlanilla (Registro "Edsger" p)					2 + largoDePlanilla p
+
+					(largoDePlanilla. Caso 2)
+
+1 + 1 + largoDePlanilla p
+
+					(aritmética)
+
+2 + largoDePlanilla p
+
+....................................................................................................................
+
+largoDePlanilla(juntarPlanillas (Registro "Alonzo"(Registro "Alan"(Registro "Edsger" Fin)))p)= largoDePlanilla (Registro "Alonzo"(Registro "Alan"(Registro "Edsger" Fin)))+ largoDePlanilla p
+
+Lado izquierdo 												Lado derecho
+
+largoDePlanilla(juntarPlanillas (Registro "Alonzo"(Registro "Alan"(Registro "Edsger" Fin)))p)		largoDePlanilla (Registro "Alonzo"(Registro "Alan"(Registro "Edsger" Fin)))+ largoDePlanilla p
+
+					(juntarPlanillas. Caso 2)											(largoDePlanilla. Caso 2)
+
+largoDePlanilla (Registro "Alonzo" (juntarPlanillas (Registro "Alan"(Registro "Edsger" Fin)) p))	1 + largoDePlanilla (Registro "Alan"(Registro "Edsger" Fin)) + largoDePlanilla p
+
+					(juntarPlanillas. Caso 2)											(largoDePlanilla. Caso 2)
+
+largoDePlanilla (Registro "Alonzo" (Registro "Alan" (juntarPlanillas (Registro "Edsger" Fin) p)))	1 + 1 + (Registro "Edsger" Fin) + largoDePlanilla p
+
+					(juntarPlanillas. Caso 2)											(largoDePlanilla. Caso 2)
+
+largoDePlanilla (Registro "Alonzo" (Registro "Alan" (Registro "Edsger" (juntarPlanillas Fin p))))	1 + 1 + 1 + largoDePlanilla Fin +  largoDePlanilla p
+
+					(juntarPlanillas. Caso 1)											(largoDePlanilla. Caso 1) 
+
+largoDePlanilla (Registro "Alonzo" (Registro "Alan" (Registro "Edsger" p)))				1 + 1 + 1 + 0 + largoDePlanilla p
+
+					(largoDePlanilla. Caso 2)											(aritmética)
+
+1 + largoDePlanilla  (Registro "Alan" (Registro "Edsger" p))						3 + largoDePlanilla p
+
+					(largoDePlanilla. Caso 2)
+
+1 + 1 + (Registro "Edsger" p)
+
+					(largoDePlanilla. Caso 2)
+
+1 + 1 + 1 + largoDePlanilla p
+
+					(aritmética)
+
+3 + largoDePlanilla p
+
+....................................................................................................................
+
+largoDePlanilla (planillaDeIntegrantes (Becario "Alan")) = cantidadDeIntegrantes (Becario "Alan")
+
+Lado izquierdo							Lado derecho
+
+largoDePlanilla (planillaDeIntegrantes (Becario "Alan"))	cantidadDeIntegrantes (Becario "Alan")
+
+			(planillaDeIntegrantes. Caso 1)						(cantidadDeIntegrantes. Caso 1)
+
+largoDePlanilla (Registro "Alan" Fin)				1
+
+			(largoPlanilla. Caso 2)
+
+1 + largoDePlanilla Fin
+
+			(largoPlanilla. Caso 1)
+
+1 + 0
+
+			(Aritmética)
+
+1
+
+....................................................................................................................
+
+largoDePlanilla (planillaDeIntegrantes (Becario "Brian")) = cantidadDeIntegrantes (Becario "Brian")
+
+Lema. Es igual, solo cambia el nombre. Vale para todo n. Está demostrado.
+
+....................................................................................................................
+
+largoDePlanilla (planillaDeIntegrantes (Becario n))= cantidadDeIntegrantes (Becario n)
+
+
+Lema. Es igual, solo cambia el nombre. Vale para todo n. Está demostrado.
+
+....................................................................................................................
+
+largoDePlanilla (planillaDeIntegrantes (Investigador "Alonzo" (Becario "Alan") (Becario "Alfred") (Becario "Stephen"))) = cantidadDeIntegrantes (Investigador "Alonzo" (Becario "Alan") (Becario "Alfred") (Becario "Stephen"))
+
+Lado izquierdo																																															Lado derecho
+
+largoDePlanilla (planillaDeIntegrantes (Investigador "Alonzo" (Becario "Alan") (Becario "Alfred") (Becario "Stephen")))																					 cantidadDeIntegrantes (Investigador "Alonzo" (Becario "Alan") (Becario "Alfred") (Becario "Stephen"))
+
+					(planillaDeIntegrantes, Caso 2)																																													(cantidadDeIntegrantes. Caso 2)
+
+largoDePlanilla (Registro "Alonzo" (juntarPlanillas (juntarPlanillas (planillaDeIntegrantes (Becario "Alan"))(planillaDeIntegrantes (Becario "Alfred"))) (planillaDeIntegrantes (Becario "Stephen))))	1 + (cantidadDeIntegrantes (Becario "Alan")) + (cantidadDeIntegrantes (Becario "Alfred")) + (cantidadDeIntegrantes (Becario "Stephen"))
+
+					(planillaDeIntegrantes. Caso 1 x 3)																																												(cantidadDeIntegrantes. Caso 1 x 3 veces) 
+
+largoDePlanilla (Registro "Alonzo" (juntarPlanillas (juntarPlanillas (Registro "Alan" Fin)(Registro "Alfred" Fin)) (Registro"Stephen Fin)))																1 + 1 + 1 + 1 
+
+					(juntarPlanillas. Caso 2)																																														(Aritmética)
+ 
+largoDePlanilla (Registro "Alonzo" (juntarPlanillas (Registro "Alan" (juntarPlanillas Fin(Registro "Alfred" Fin))) (Registro"Stephen Fin)))																4
+
+					(juntarPlanillas. Caso 1)
+
+largoDePlanilla (Registro "Alonzo" (juntarPlanillas (Registro "Alan" (Registro "Alfred" Fin)) (Registro"Stephen Fin)))
+
+					(juntarPlanillas. Caso 2)
+
+largoDePlanilla (Registro "Alonzo" (Registro "Alan" (juntarPlanillas (Registro "Alfred" Fin) (Registro"Stephen Fin))))
+
+					(juntarPlanillas. Caso 2)
+
+largoDePlanilla (Registro "Alonzo" (Registro "Alan" (Registro "Alfred" (juntarPlanillas Fin (Registro"Stephen Fin)))))
+
+					(juntarPlanillas. Caso 1)
+
+largoDePlanilla (Registro "Alonzo" (Registro "Alan" (Registro "Alfred" (Registro"Stephen Fin))))
+
+					(largoDePlanilla. Caso 2)
+
+1 + largoDePlanilla (Registro "Alan" (Registro "Alfred" (Registro"Stephen Fin)))
+
+					(largoDePlanilla. Caso 2)
+
+1 + 1 + largoDePlanilla (Registro "Alfred" (Registro"Stephen Fin))
+
+					(largoDePlanilla. Caso 2)
+
+1 + 1 + 1 + largoDePlanilla (Registro"Stephen Fin)
+
+					(largoDePlanilla. Caso 2)
+
+1 + 1 + 1 + 1 +  largoDePlanilla Fin
+
+					(largoDePlanilla. Caso 1)
+
+1 + 1 + 1 + 1 + 0
+
+					(Aritmética)
+
+4
+
+....................................................................................................................
+
+
+largoDePlanilla (planillaDeIntegrantes (Investigador n (Becario n1) (Becario n2) (Becario n3))) = cantidadDeIntegrantes (Investigador n (Becario n1) (Becario n2) (Becario n3))
+
+Lema. Es igual pero se cambian los nombres por una variable n. El nombre no cambia nada entonces es igual.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

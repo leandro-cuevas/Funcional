@@ -1,0 +1,104 @@
+para todo x :: a 
+cantidadDePuntosVacios (Habitacion x) = 0
+
+Lado izquierdo
+
+cantidadDePuntosVacios (Habitacion x)
+
+            (cantidadDePuntosVacios. Caso 1)
+
+0
+
+....................................................................................................................
+
+Cumple.
+
+cantidadDePuntosVacios (Pasaje Nothing (Habitacion Joyas)) = 1
+
+Lado izquierdo
+
+cantidadDePuntosVacios (Pasaje Nothing (Habitacion Joyas))
+
+                        (cantidadDePuntosVacios. Caso 2)
+
+descontarCosa Nothing + cantidadDePuntosVacios (Habitacion Joyas)
+
+                    (descontarCosa. Caso 1)
+
+1 + cantidadDePuntosVacios (Habitacion Joyas)
+
+                    (cantidadDePuntosVacios. Caso 1)
+
+1 + 0
+
+                    (Aritmética)
+
+1.
+
+Cumple
+
+....................................................................................................................
+
+para todo y :: a . para todo x :: a .
+cantidadDePuntosVacios (Pasaje (Just y) (Habitacion x)) = 0
+
+                        (cantidadDePuntosVacios. Caso 2)
+
+descontarCosa (Just y) + cantidadDePuntosVacios (Habitacion x)
+
+                        (descontarCosa. Caso 2)
+
+0 + cantidadDePuntosVacios (Habitacion x)
+
+                        (cantidadDePuntosVacios. Caso 1)
+
+0 + 0
+
+                        Aritmética
+
+0
+
+....................................................................................................................
+
+cantidadDePuntosCon (Criatura Troll) (Habitacion (Objeto Oro)) = 0
+
+                        (cantidadDePuntosCon. Caso 1)
+
+sumaSiSonIguales (Criatura Troll) == (Objeto Oro)
+
+                        (sumaSiSonIguales. Caso 2)
+
+0
+
+Cumple 
+
+....................................................................................................................
+
+cantidadDePuntosCon (Criatura Troll) (Pasaje (Just (Criatura Troll)) (Habitacion (Criatura Troll))) = 2
+
+                        (cantidadDePuntosCon. Caso 2)
+
+sumaSiSonIguales (maybeIgual (Criatura Troll) (Just (Criatura Troll))) + sumaSiSonIguales (Criatura Troll) (Habitacion (Criatura Troll))
+
+                        (maybeIgual. Caso 2)
+
+sumaSiSonIguales True + cantidadDePuntosCon (Criatura Troll) (Habitacion (Criatura Troll))
+
+                        (sumaSiSonIguales. Caso 1)
+
+1 + cantidadDePuntosCon (Criatura Troll) (Habitacion (Criatura Troll))
+
+                        (cantidadDePuntosCon. Caso 1)
+
+1 + sumaSiSonIguales ((Criatura Troll) == (Criatura Troll))
+
+                        (sumaSiSonIguales. Caso 1)
+
+1 + 1
+
+                        (Aritmética)
+
+2
+
+
+

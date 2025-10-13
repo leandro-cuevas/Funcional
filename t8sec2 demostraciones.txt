@@ -1,0 +1,10 @@
+para todo n1. para todo n2.
+evalN (addN n1 n2) = evalN n1 + evalN n2
+
+Decido hacer recursión estructural sobre la estructura n1.
+
+Sea n1 un N bien formado.
+
+Caso base. evalN (addN Z n2) = evalN Z + evalN n2
+
+Caso recursivo. 
