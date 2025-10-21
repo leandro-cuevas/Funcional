@@ -2,7 +2,7 @@ data N = Z | S N
 
 evalN :: N -> Int
 evalN Z     = 0
-evalN (S n) = 1 + evalN N
+evalN (S n) = 1 + evalN n
 
 addN :: N -> N -> N
 addN Z n     = n

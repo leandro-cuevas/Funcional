@@ -1,0 +1,169 @@
+b) i) ea2ExpA . expA2ea = id
+
+Dem)
+
+¿ea2ExpA . expA2ea = id?
+Por principio de extensioanlidad, para todo expa ¿ea2ExpA . expA2ea expa = id expa?
+
+Sea expa un ExpA bien formado. Por principio de inducción estructural sobre la estructura expa.
+
+Caso base. ¿ea2ExpA . expA2ea (Cte x) = id (Cte x)?
+
+H.I.1. ¡ea2ExpA . expA2ea expa1 = id expa1!
+H.I.2. ¡ea2ExpA . expA2ea expa2 = id expa2!
+
+Caso recursivo 1 ¿ea2ExpA . expA2ea (Suma expa1 expa2) = id (Suma expa1 expa2)?
+
+H.I.1. ¡ea2ExpA . expA2ea expa1 = id expa1!
+H.I.2. ¡ea2ExpA . expA2ea expa2 = id expa2!
+
+Caso recursivo 2 ¿ea2ExpA . expA2ea (Prod expa1 expa2) = id (Prod expa1 expa2)?
+
+Caso base.
+
+Lado izquierdo					Lado derecho
+
+ea2ExpA . expA2ea (Cte x)			id (Cte x)
+			(Por (.) )				(Por id)
+ea2ExpA (expA2ea (Cte x))			Cte x
+			(expA2ea 1)
+ea2ExpA (Const x)
+			(ea2Expa 1)
+Cte x
+
+Caso recursivo 1
+
+Lado izquierdo								Lado derecho
+
+ea2ExpA . expA2ea (Suma expa1 expa2)					id (Suma expa1 expa2)
+					(Por (.) )						(id)
+ea2ExpA (expA2ea (Suma expa1 expa2))					Suma expa1 expa2
+					(expA2ea 2)			
+ea2ExpA (BOp Sum (expA2ea expa1) (expA2ea expa2))
+
+					(ea2ExpA 2)
+ea2Op2ExpA Sum (ea2ExpA (expA2ea expa1))  (ea2ExpA (expA2ea expa2)) 
+					(H.I.1 e H.I.2) --Acá en realidad hay un paso previo que es definicion de (.)
+ea2Op2ExpA Sum (id expa1) (id expa2)
+					(id)
+ea2Op2ExpA Sum expa1 expa2
+					(ea2Op2ExpA 1)
+Suma expa1 expa2
+
+Caso recursivo 2
+
+Lado izquierdo								Lado derecho
+
+ea2ExpA . expA2ea (Prod expa1 expa2)					id (Prod expa1 expa2)
+					(Por (.) )						(id)
+ea2ExpA (expA2ea (Prod expa1 expa2))					Prod expa1 expa2
+					(expA2ea 3)			
+ea2ExpA (BOp Mul (expA2ea expa1) (expA2ea expa2))
+					(ea2ExpA 2)
+ea2Op2ExpA Mul (ea2ExpA (expA2ea expa1))  (ea2ExpA (expA2ea expa2)) 
+					(H.I.1 e H.I.2) --Acá en realidad hay un paso previo que es definicion de (.)
+ea2Op2ExpA Mul (id expa1) (id expa2)
+					(id)
+ea2Op2ExpA Mul expa1 expa2
+					(ea2Op2ExpA 2)
+Prod expa1 expa2
+
+....................................................................................................................
+
+evalExpA . ea2ExpA = evalEA
+Para todo ea:: EA
+¿evalExpA . ea2ExpA ea = evalEA ea?
+Por principio de recursión estructural sobre la estructura ea.
+
+Caso base ¿evalExpA . ea2ExpA (Const x)= evalEA (Const x)?
+
+H.I.1. ¡evalExpA . ea2ExpA ea1 = evalEA ea1!
+H.I.2. ¡evalExpA . ea2ExpA ea2 = evalEA ea2!
+
+Caso recursivo ¿evalExpA . ea2ExpA (Bop op ea1 ea2)= evalEA (Bop op ea1 ea2)?
+
+Dem)
+
+Caso base
+
+Lado izquierdo					Lado derecho
+
+evalExpA . ea2ExpA (Const x)			evalEA (Const x)
+			
+evalExpA (ea2ExpA (Const x))			x
+
+evalExpA (Cte x)
+x
+
+Caso recursivo
+
+evalExpA . ea2ExpA (Bop op ea1 ea2)			evalEA (Bop op ea1 ea2)
+			( (.) )					(evalEA 2)
+evalExpA (ea2ExpA (Bop op ea1 ea2))			evalOP op (evalEA ea1) (evalEA ea2)
+			(ea2ExpA 2)				(H.I. 1 y 2)	
+evalExpA (ea2Op2ExpA op (ea2ExpA  ea1) (ea2ExpA  ea2))		evalOP op (evalExpA (ea2ExpA ea1)) (evalExpA (ea2ExpA ea2)
+			(Lema)
+evalOP op (evalExpA (ea2ExpA ea1)) (evalExpA (ea2ExpA ea2)
+
+
+Demostración del lema. evalExpA (ea2Op2ExpA op expa1 expa2) = evalOP op (evalExpA ea1) (evalExpA ea2)
+
+Decido hacer recursión estructural sobre la estructura op. Sea op :: BinOp
+
+Caso base 1. evalExpA (ea2Op2ExpA Sum expa1 expa2) = evalOP Sum (evalExpA expa1) (evalExpA expa2)
+Caso base 2. evalExpA (ea2Op2ExpA Mul expa1 expa2) = evalOP Mul (evalExpA expa1) (evalExpA expa2)
+
+Dem)
+
+Caso base 1.
+
+Lado izquierdo							Lado derecho
+
+evalExpA (ea2Op2ExpA Sum ea1 ea2)				evalOP Sum (evalExpA ea1) (evalExpA ea2)
+			(ea2Op2ExpA 1)						(evalOP 1)
+evalExpA Suma ea1 ea2						evalExpA ea1 + evalExpA ea2
+			(evalExpA 1)
+evalExpA ea1 + evalExpA ea2
+
+
+....................................................................................................................
+
+para todo t :: Arbol a b
+cantidadDeHojas t + cantidadDeNodos t = cantidadDeConstructores t
+
+Por principio de recursión estructural sobre la estructura t.
+
+Dem)
+
+Caso base ¿cantidadDeHojas Hoja + cantidadDeNodos Hoja = cantidadDeConstructores Hoja?
+
+H.I.1. ¡cantidadDeHojas a1 + cantidadDeNodos a1 = cantidadDeConstructores a1
+H.I.2. ¡cantidadDeHojas a2 + cantidadDeNodos a2 = cantidadDeConstructores a2
+
+Caso recursivo ¿cantidadDeHojas (Nodo a1 a2) + cantidadDeNodos (Nodo a1 a2) = cantidadDeConstructores (Nodo a1 a2)?
+
+Caso base
+
+Lado izquierdo						Lado derecho
+
+cantidadDeHojas Hoja + cantidadDeNodos Hoja 		cantidadDeConstructores Hoja
+				(cantidadDeNodos 1)				(cantidadDeConstructores 1)
+cantidadDeHojas Hoja + 0				1
+				(cantidadDeHojas 1)
+1 + 0
+				(Aritmética)
+1
+
+Caso recursivo
+
+Lado izquierdo										Lado derecho
+
+cantidadDeHojas (Nodo a1 a2) + cantidadDeNodos (Nodo a1 a2) 				cantidadDeConstructores (Nodo a1 a2)
+				(cantidadDeNodos 2)								(cantidadDeConstructores 2)
+cantidadDeHojas (Nodo a1 a2) + 1 + cantidadDeNodos a1 + cantidadDeNodos a2		1 + cantidadDeConstructores  a1 + cantidadDeConstructores a2
+				(cantidadDeHojas 2)
+0 + cantidadDeHojas a1 + cantidadDeHojas a2 + 1 + cantidadDeNodos a1 + cantidadDeNodos a2
+				(aritmética y reordenamiento de la suma)
+1 + cantidadDeHojas a1 + cantidadDeNodos a1 + cantidadDeHojas a2 + cantidadDeNodos a2
+				(H.I.1 e H.I.2)
+1 + cantidadDeConstructores a1 + cantidadDeConstructores a2

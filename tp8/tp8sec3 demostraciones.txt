@@ -1,0 +1,40 @@
+cantidadSumaCero . simplificarExpA = const 0
+para toda expa. ¿cantidadSumaCero . simplificarExpA expa = const 0 expa?
+
+Caso base. cantidadSumaCero (simplificarExpA (Cte 0)) = const 0 (Cte 0)
+
+Caso recursivo 1. cantidadSumaCero (simplificarExpA (Suma expa1 expa2)) = const 0 (Suma expa1 expa2)
+
+H.I.1: cantidadSumaCero (simplificarExpA expa1) = 0
+H.I.2: cantidadSumaCero (simplificarExpA expa2) = 0
+
+Caso recurisvo 2. cantidadSumaCero (simplificarExpA (Prod expa1 expa2)) = const 0 (Prod expa1 expa2)
+
+Dem)
+
+cantidadSumaCero (simplificarExpA (Cte 0)) = const 0 (Cte 0)
+
+Lado izquierdo					Lado derecho
+
+cantidadSumaCero (simplificarExpA (Cte 0))	const 0 (Cte 0)
+		(simplificarExpa. Caso 1)			(const)
+cantidadSumaCero (Cte 0)			0
+		(cantidadSumaCero. Caso 1)
+0
+
+Caso recursivo 1. cantidadSumaCero (simplificarExpA (Suma expa1 expa2)) = const 0 (Suma expa1 expa2)
+
+Lado izquierdo																		Lado derecho
+
+cantidadSumaCero (simplificarExpA (Suma expa1 expa2))													const 0 (Suma expa1 expa2)
+		(simplificarExpa. Caso2)
+cantidadSumaCero (simplificarSuma (simplificarExpA expa1) (simplificarExpA expa2))
+		(simplificarSuma. Caso 3)
+cantidadSumaCero (Suma (simplificarExpA expa1) (simplificarExpA expa2))
+		(cantidadSumaCero. Caso 3)
+unoSiAmbosCero (simplificarExpA expa1) (simplificarExpA expa2) + cantidadSumaCero (simplificarExpA expa1) + cantidadSumaCero (simplificarExpA expa2)
+		(H.I.1 e H.I.2)
+unoSiAmbosCero (simplificarExpA expa1) (simplificarExpA expa2) + 0 + 0
+		(Aritmética)
+unoSiAmbosCero (simplificarExpA expa1) (simplificarExpA expa2)
+	

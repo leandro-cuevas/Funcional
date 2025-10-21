@@ -1,0 +1,115 @@
+para todo n1. para todo n2.
+evalN (addN n1 n2) = evalN n1 + evalN n2
+
+Decido hacer recursión estructural sobre la estructura n1.
+
+Sea n1 un N bien formado.
+
+Caso base. evalN (addN Z n2) = evalN Z + evalN n2
+
+Caso recursivo. evalN (addN (S n1') n2) = evalN (S n1') + evalN n2
+
+H.I. evalN (addN n1' n2) = evalN n1' + evalN n2
+
+Dem)
+
+Caso base. evalN (addN Z n2) = evalN Z + evalN n2
+
+Lado izquierdo				Lado derecho
+
+evalN (addN Z n2)			evalN Z + evalN n2
+		(addN. caso base)			(evalN. caso base)
+evalN n2				0 + evalN n2
+							(aritmética)
+					evalN n2
+
+Caso recursivo. evalN (addN (S n1') n2) = evalN (S n1') + evalN n2
+
+Lado izquierdo				Lado derecho
+
+evalN (addN (S n1') n2)			evalN (S n1') + evalN n2
+		(addN. Caso recursivo)			(evalN. Caso recursivo)
+evalN (S (addN n1' n2)			1 + evalN n1' + evalN n2
+		(evalN. Caso recursivo)
+1 + evalN (addN n1' n2)
+		(H.I.)
+1 + evalN n1' + evalN n2
+
+Demostrado
+
+....................................................................................................................
+
+para todo n1. para todo n2.
+evalN (prodN n1 n2) = evalN n1 * evalN n2
+
+Decido hacer recursión estructural sobre la estructura n1. Sea n1 un N bien formado.
+
+Caso base. ¿evalN (prodN Z n2) = evalN Z * evalN n2?
+
+Caso recursivo. ¿evalN (prodN (S n1') n2) = evalN (S n1') * evalN n2?
+
+H.I. ¡evalN (prodN n1' n2) = evalN n1' * evalN n2!
+
+Dem)
+
+Caso base. evalN (prodN Z n2) = evalN Z * evalN n2
+
+Lado izquierdo				Lado derecho
+
+evalN (prodN Z n2)			evalN Z * evalN n2
+		(prodN. Caso base)			(evalN. Caso base)
+evalN Z					0 * evalN n2
+		(evalN. Caso base)			(aritmética)
+0					0
+
+Caso recursivo. evalN (prodN (S n1') n2) = evalN (S n1') * evalN n2
+
+Lado izquierdo				Lado derecho
+
+evalN (prodN (S n1') n2)		evalN (S n1') * evalN n2
+		(prodN. Caso recursivo)			(evalN. Caso recursivo)
+evalN (addN n2 (prodN n1' n2))		(1 + evalN n1') * evalN n2
+		(Lema punto anterior)			(propiedad distributiva)
+evalN n2 + evalN (prodN n1' n2)		1 * evalN n2 + evalN n1' * evalN n2
+		(H.I.)					(propiedad de la multiplicación)
+evalN n2 + evalN n1' * evalN n2		evalN n2 + evalN n1' * evalN n2
+
+Demostrada.
+
+int2N . evalN = id
+para todo n ¿int2N (evalN n) = id n?
+Sea n un N bien formado.
+
+Caso base. ¿int2N (evalN Z) = id Z?
+
+Caso recursivo. ¿int2N (evalN (S n')) = id (S n')?
+
+H.I. int2N (evalN n') = id n'
+
+Dem)
+
+Caso base. int2N (evalN Z) = id Z
+
+Lado izquierdo				Lado derecho
+
+int2N (evalN Z)				id Z
+		(eval N. Caso base)		(def)
+int2N 0					Z
+		(int2N caso base)
+Z
+
+Caso recursivo. int2N (evalN (S n')) = id (S n')
+
+Lado izquierdo				Lado derecho
+
+int2N (evalN (S n'))			id (S n')
+		(evalN caso recursivo)		(id)
+int2N (1 + evalN n')			S n'
+		(int2N caso recursivo)
+S (int2N ((1 + evalN n') - 1)) 
+		(simplificacion)
+S (int2N (evalN n'))
+		(H.I.)
+S (id n')
+		(id)
+S n'
